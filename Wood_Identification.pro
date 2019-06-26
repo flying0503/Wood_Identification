@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    qcvdisplay.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    qcvdisplay.h
 
 FORMS += \
         mainwindow.ui
