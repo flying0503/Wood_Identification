@@ -35,6 +35,7 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
 INCLUDEPATH += D:\opencv\build\include\opencv\
                D:\opencv\build\include\opencv2\
                D:\opencv\build\include
