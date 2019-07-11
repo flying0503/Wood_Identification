@@ -31,7 +31,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    qcvdisplay.h
+    qcvdisplay.h \
+    butterworth.h
 
 FORMS += \
         mainwindow.ui
