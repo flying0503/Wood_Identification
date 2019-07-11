@@ -32,7 +32,9 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     qcvdisplay.h \
-    butterworth.h
+    algorithm/butterworth.h \
+    algorithm/equalizehist.h \
+    algorithm/split_rgb.h
 
 FORMS += \
         mainwindow.ui
