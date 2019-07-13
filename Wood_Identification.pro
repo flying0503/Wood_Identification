@@ -27,14 +27,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    qcvdisplay.cpp
+    qcvdisplay.cpp \
+    algorithm/eigenvalue.cpp
 
 HEADERS += \
         mainwindow.h \
     qcvdisplay.h \
     algorithm/butterworth.h \
     algorithm/equalizehist.h \
-    algorithm/split_rgb.h
+    algorithm/split_rgb.h \
+    algorithm/eigenvalue.h \
+    process/process.h
 
 FORMS += \
         mainwindow.ui
