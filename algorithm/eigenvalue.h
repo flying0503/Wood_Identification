@@ -6,7 +6,7 @@ using namespace cv;
 
 class eigenvalue
 {
-public:
+private:
     //图片
     Mat *Ident_Img;
     Mat *L,*a,*b;
@@ -72,7 +72,7 @@ public:
     double calculate_std_dev_E(Mat L,Mat a,Mat b);  //Lab空间距离
     double calculate_std_dev_H(Mat a,Mat b);  //去明度距离
 
-
+    double *get_eigenvalue();
 };
 
 #endif // EIGENVALUE_H

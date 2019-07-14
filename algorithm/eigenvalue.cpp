@@ -264,3 +264,34 @@ double eigenvalue::calculate_std_dev_H(Mat a, Mat b)
     meanStdDev(H,avg,stddev);
     return stddev.at<double>(0,0);
 }
+
+double *eigenvalue::get_eigenvalue()
+{
+    double Eigenvalue[19] = {
+     avg_L,
+     avg_a,
+     avg_b,
+
+     avg_Ag,
+     avg_C,
+
+
+     avg_dev_L,
+     avg_dev_a,
+     avg_dev_b,
+     avg_dev_Ag,
+     avg_dev_C,
+     avg_dev_E,
+     avg_dev_H,
+
+
+     std_dev_L,
+     std_dev_a,
+     std_dev_b,
+     std_dev_Ag,
+     std_dev_C,
+     std_dev_E,
+     std_dev_H
+    };
+    return Eigenvalue;
+}
