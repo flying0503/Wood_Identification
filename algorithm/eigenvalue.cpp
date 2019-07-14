@@ -2,86 +2,265 @@
 
 eigenvalue::eigenvalue(Mat img)
 {
+    Ident_Img = new Mat(img);
     //图片
-    cvtColor(img,Ident_Img,COLOR_BGR2Lab);
+    cvtColor(img,*Ident_Img,COLOR_BGR2Lab);
     Mat channels[3];
-    split(Ident_Img,channels);
+    split(*Ident_Img,channels);
 
-    L = channels[0];
-    a = channels[1];
-    b = channels[2];
+    L = new Mat(channels[0]);
+    a = new Mat(channels[1]);
+    b = new Mat(channels[2]);
 
     //各分量均值
-    avg_L = calculate_avg_L(L);      //明度
-    avg_a = calculate_avg_a(a);      //红绿轴
-    avg_b = calculate_avg_b(b);      //黄蓝轴
+    avg_L = calculate_avg_L(*L);      //明度
+    avg_a = calculate_avg_a(*a);      //红绿轴
+    avg_b = calculate_avg_b(*b);      //黄蓝轴
 
-    avg_Ag = calculate_avg_Ag(a,b);    //色调角均值
-    avg_C = calculate_avg_C(a,b);      //彩度均值
+    avg_Ag = calculate_avg_Ag(*a,*b);    //色调角均值
+    avg_C = calculate_avg_C(*a,*b);      //彩度均值
 
     //均差
-    avg_dev_L = calculate_avg_dev_L(L);  //明度
-    avg_dev_a = calculate_avg_dev_a(a);  //红绿轴
-    avg_dev_b = calculate_avg_dev_b(b);  //黄蓝轴
-    avg_dev_Ag = calculate_avg_dev_Ag(a,b);//色调角
-    avg_dev_C = calculate_avg_dev_C(a,b);  //彩度
-    avg_dev_E = calculate_avg_dev_E(L,a,b);  //Lab空间距离
+    avg_dev_L = calculate_avg_dev_L(*L);  //明度
+    avg_dev_a = calculate_avg_dev_a(*a);  //红绿轴
+    avg_dev_b = calculate_avg_dev_b(*b);  //黄蓝轴
+    avg_dev_Ag = calculate_avg_dev_Ag(*a,*b);//色调角
+    avg_dev_C = calculate_avg_dev_C(*a,*b);  //彩度
+    avg_dev_E = calculate_avg_dev_E(*L,*a,*b);  //Lab空间距离
     avg_dev_H = calculate_avg_dev_H(avg_dev_L,avg_dev_E,avg_dev_C);  //去明度距离
 
     //标准差
-    std_dev_L = calculate_std_dev_L(L);  //明度
-    std_dev_a = calculate_std_dev_a(a);  //红绿轴
-    std_dev_b = calculate_std_dev_b(b);  //黄蓝轴
-    std_dev_Ag = calculate_std_dev_Ag(a,b);//色调角
-    std_dev_C = calculate_std_dev_C(a,b);  //彩度
-    std_dev_E = calculate_std_dev_E(L,a,b);  //Lab空间距离
-    std_dev_H = calculate_std_dev_H(L,a,b);  //去明度距离
+    std_dev_L = calculate_std_dev_L(*L);  //明度
+    std_dev_a = calculate_std_dev_a(*a);  //红绿轴
+    std_dev_b = calculate_std_dev_b(*b);  //黄蓝轴
+    std_dev_Ag = calculate_std_dev_Ag(*a,*b);//色调角
+    std_dev_C = calculate_std_dev_C(*a,*b);  //彩度
+    std_dev_E = calculate_std_dev_E(*L,*a,*b);  //Lab空间距离
+    std_dev_H = calculate_std_dev_H(*a,*b);  //去明度距离
 
 }
 
-int eigenvalue::calculate_avg_L(Mat img)
+eigenvalue::~eigenvalue()
 {
-    Mat avg_L,temp;
-    meanStdDev(img,avg_L,temp);
-    return avg_L.at<int>(0,0);
+    delete Ident_Img;
+    delete L;
+    delete a;
+    delete b;
 }
 
-int eigenvalue::calculate_avg_a(Mat img)
+void eigenvalue::display_eigenvalue()
 {
-    Mat avg_a,temp;
-    meanStdDev(img,avg_a,temp);
-    return avg_a.at<int>(0,0);
+    std::cout<<"avg_L="<<avg_L<<std::endl;
+    std::cout<<"avg_a="<<avg_a<<std::endl;
+    std::cout<<"avg_b="<<avg_b<<std::endl;
+    std::cout<<"avg_Ag="<<avg_Ag<<std::endl;
+    std::cout<<"avg_C="<<avg_C<<std::endl;
+
+    std::cout<<"avg_dev_L="<<avg_dev_L<<std::endl;
+    std::cout<<"avg_dev_a="<<avg_dev_a<<std::endl;
+    std::cout<<"avg_dev_b="<<avg_dev_b<<std::endl;
+    std::cout<<"avg_dev_Ag="<<avg_dev_Ag<<std::endl;
+    std::cout<<"avg_dev_C="<<avg_dev_C<<std::endl;
+    std::cout<<"avg_dev_E="<<avg_dev_E<<std::endl;
+    std::cout<<"avg_dev_H="<<avg_dev_H<<std::endl;
+
+    std::cout<<"std_dev_L="<<std_dev_L<<std::endl;
+    std::cout<<"std_dev_a="<<std_dev_a<<std::endl;
+    std::cout<<"std_dev_b="<<std_dev_b<<std::endl;
+    std::cout<<"std_dev_Ag="<<std_dev_Ag<<std::endl;
+    std::cout<<"std_dev_C="<<std_dev_C<<std::endl;
+    std::cout<<"std_dev_E="<<std_dev_E<<std::endl;
+    std::cout<<"std_dev_H="<<std_dev_H<<std::endl;
 }
 
-int eigenvalue::calculate_avg_b(Mat img)
-{   Mat avg_b,temp;
-    meanStdDev(img,avg_b,temp);
-    return avg_b.at<int>(0,0);
-}
-
-int eigenvalue::calculate_avg_Ag(Mat a, Mat b)
+double eigenvalue::calculate_avg_L(Mat img)
 {
-    Mat c=a;
-    for (int i=0;i<c.rows;i++) {
-        for (int j=0;j<c.cols;j++) {
-            if(b.at<int>(i,j) == 0)
-            {
-                c.at<int>(i,j) = 0;
-            }else {
-                c.at<int>(i,j) = a.at<int>(i,j)/b.at<int>(i,j);
-            }
+    img.convertTo(img,CV_32F);
+    auto avg_L = mean(img);
+    return avg_L[0];
+}
+
+double eigenvalue::calculate_avg_a(Mat img)
+{
+    img.convertTo(img,CV_32F);
+    auto avg_a = mean(img);
+    return avg_a[0];
+}
+
+double eigenvalue::calculate_avg_b(Mat img)
+{
+    img.convertTo(img,CV_32F);
+    auto avg_b = mean(img);
+    return avg_b[0];
+}
+
+double eigenvalue::calculate_avg_Ag(Mat a, Mat b)
+{
+    Mat Ag = calculate_Ag(a,b);
+    auto avg = mean(Ag);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_C(Mat a, Mat b)
+{
+    Mat C = calculate_C(a,b);
+    auto avg = mean(C);
+    return avg[0];
+}
+
+Mat eigenvalue::calculate_Ag(Mat a, Mat b)
+{
+    Mat da,db;
+    a.convertTo(da,CV_32F);
+    b.convertTo(db,CV_32F);
+    Mat Ag;
+    Ag = db/da;
+    Ag.convertTo(Ag,CV_32F);
+    for (int i = 0;i<Ag.rows;i++) {
+        for (int j = 0;j<Ag.cols;j++) {
+            Ag.at<float>(i,j) = atan(Ag.at<float>(i,j));
         }
     }
-
+    return Ag;
 }
 
-int eigenvalue::calculate_avg_C(Mat a, Mat b)
+Mat eigenvalue::calculate_C(Mat a, Mat b)
 {
-    Mat a2 = a.mul(a);
-    Mat b2 = b.mul(b);
+    Mat da,db;
+    a.convertTo(da,CV_32F);
+    b.convertTo(db,CV_32F);
+    Mat a2 = da.mul(da);
+    Mat b2 = db.mul(db);
     Mat C = a2+b2;
+    C.convertTo(C,CV_32F);
     sqrt(C,C);
-    Mat mean,temp;
-    meanStdDev(C,mean,temp);
-    return mean.at<int>(0,0);
+    return C;
+}
+
+double eigenvalue::calculate_avg_dev_L(Mat L)
+{
+    Mat dL;
+    L.convertTo(dL,CV_32F);
+    dL = abs(dL-avg_L);
+    auto avg = mean(dL);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_a(Mat a)
+{
+    Mat da;
+    a.convertTo(da,CV_32F);
+    da = abs(da-avg_a);
+    auto avg = mean(da);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_b(Mat b)
+{
+    Mat db;
+    b.convertTo(db,CV_32F);
+    db = abs(db-avg_b);
+    auto avg = mean(db);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_Ag(Mat a, Mat b)
+{
+    Mat Ag = calculate_Ag(a,b);
+    Ag = abs(Ag-avg_Ag);
+    auto avg = mean(Ag);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_C(Mat a, Mat b)
+{
+    Mat C = calculate_C(a,b);
+    Mat dC;
+    C.convertTo(dC,CV_32F);
+    dC = abs(dC-avg_C);
+    auto avg = mean(dC);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_E(Mat L, Mat a, Mat b)
+{
+    Mat E,dE;
+    E = (L-avg_L)^2+(a-avg_a)^2+(b-avg_b)^2;
+    E.convertTo(dE,CV_32F);
+    sqrt(dE,dE);
+    auto avg = mean(dE);
+    return avg[0];
+}
+
+double eigenvalue::calculate_avg_dev_H(double avg_L, double avg_E, double avg_C)
+{
+    double H = avg_E*avg_E - avg_L*avg_L + avg_C*avg_C;
+    H = sqrt(abs(H));
+    return H;
+}
+
+double eigenvalue::calculate_std_dev_L(Mat L)
+{
+    Mat dL,avg,stddev;
+    L.convertTo(dL,CV_32F);
+    meanStdDev(dL,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_a(Mat a)
+{
+    Mat da,avg,stddev;
+    a.convertTo(da,CV_32F);
+    meanStdDev(da,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_b(Mat b)
+{
+    Mat db,avg,stddev;
+    b.convertTo(db,CV_32F);
+    meanStdDev(db,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_Ag(Mat a, Mat b)
+{
+    Mat avg,stddev;
+    Mat Ag = calculate_Ag(a,b);
+    meanStdDev(Ag,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_C(Mat a, Mat b)
+{
+    Mat avg,stddev;
+    Mat C = calculate_C(a,b);
+    meanStdDev(C,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_E(Mat L, Mat a, Mat b)
+{
+    Mat E,dE,avg,stddev;
+
+    E = (L-avg_L)^2+(a-avg_a)^2+(b-avg_b)^2;
+    E.convertTo(dE,CV_32F);
+    sqrt(dE,dE);
+
+    meanStdDev(dE,avg,stddev);
+    return stddev.at<double>(0,0);
+}
+
+double eigenvalue::calculate_std_dev_H(Mat a, Mat b)
+{
+    Mat da,db;
+    a.convertTo(da,CV_32F);
+    b.convertTo(db,CV_32F);
+
+    Mat H = (avg_a*avg_a + avg_b*avg_b) - (2*avg_a*da + 2*avg_b*db);
+    sqrt(abs(H),H);
+    Mat avg,stddev;
+
+    meanStdDev(H,avg,stddev);
+    return stddev.at<double>(0,0);
 }
