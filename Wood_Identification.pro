@@ -28,7 +28,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     qcvdisplay.cpp \
-    algorithm/eigenvalue.cpp
+    algorithm/eigenvalue.cpp \
+    adjust_dialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,10 +38,12 @@ HEADERS += \
     algorithm/equalizehist.h \
     algorithm/split_rgb.h \
     algorithm/eigenvalue.h \
-    process/process.h
+    process/process.h \
+    adjust_dialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    adjust_dialog.ui
 
 INCLUDEPATH += D:\opencv\build\include\opencv\
                D:\opencv\build\include\opencv2\

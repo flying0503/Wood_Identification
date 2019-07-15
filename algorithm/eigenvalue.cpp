@@ -38,6 +38,28 @@ eigenvalue::eigenvalue(Mat img)
     std_dev_E = calculate_std_dev_E(*L,*a,*b);  //Lab空间距离
     std_dev_H = calculate_std_dev_H(*a,*b);  //去明度距离
 
+    Eigenvalue[0] = avg_L;
+    Eigenvalue[1] = avg_a;
+    Eigenvalue[2] = avg_b;
+
+    Eigenvalue[3] = avg_Ag;
+    Eigenvalue[4] = avg_C;
+
+    Eigenvalue[5] = avg_dev_L;
+    Eigenvalue[6] = avg_dev_a;
+    Eigenvalue[7] = avg_dev_b;
+    Eigenvalue[8] = avg_dev_Ag;
+    Eigenvalue[9] = avg_dev_C;
+    Eigenvalue[10] = avg_dev_E;
+    Eigenvalue[11] = avg_dev_H;
+
+    Eigenvalue[12] = std_dev_L;
+    Eigenvalue[13] = std_dev_a;
+    Eigenvalue[14] = std_dev_b;
+    Eigenvalue[15] = std_dev_Ag;
+    Eigenvalue[16] = std_dev_C;
+    Eigenvalue[17] = std_dev_E;
+    Eigenvalue[18] = std_dev_H;
 }
 
 eigenvalue::~eigenvalue()
@@ -48,8 +70,10 @@ eigenvalue::~eigenvalue()
     delete b;
 }
 
-void eigenvalue::display_eigenvalue()
+void eigenvalue::display_eigenvalue(char *message)
 {
+    std::cout<<message<<std::endl;
+
     std::cout<<"avg_L="<<avg_L<<std::endl;
     std::cout<<"avg_a="<<avg_a<<std::endl;
     std::cout<<"avg_b="<<avg_b<<std::endl;
@@ -267,31 +291,5 @@ double eigenvalue::calculate_std_dev_H(Mat a, Mat b)
 
 double *eigenvalue::get_eigenvalue()
 {
-    double Eigenvalue[19] = {
-     avg_L,
-     avg_a,
-     avg_b,
-
-     avg_Ag,
-     avg_C,
-
-
-     avg_dev_L,
-     avg_dev_a,
-     avg_dev_b,
-     avg_dev_Ag,
-     avg_dev_C,
-     avg_dev_E,
-     avg_dev_H,
-
-
-     std_dev_L,
-     std_dev_a,
-     std_dev_b,
-     std_dev_Ag,
-     std_dev_C,
-     std_dev_E,
-     std_dev_H
-    };
     return Eigenvalue;
 }

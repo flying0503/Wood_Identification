@@ -37,11 +37,13 @@ private:
     double std_dev_E;  //Lab空间距离
     double std_dev_H;  //去明度距离
 
+    double Eigenvalue[19];
+
 public:
     eigenvalue(Mat img);
     ~eigenvalue();
 
-    void display_eigenvalue();
+    void display_eigenvalue(char *message);
 
     //各分量均值
     double calculate_avg_L(Mat L);      //明度
