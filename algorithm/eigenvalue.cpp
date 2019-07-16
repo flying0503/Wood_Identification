@@ -293,3 +293,8 @@ double *eigenvalue::get_eigenvalue()
 {
     return Eigenvalue;
 }
+
+Mat eigenvalue::get_img()
+{
+    return *Ident_Img;
+}

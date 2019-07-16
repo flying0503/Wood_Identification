@@ -11,15 +11,22 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>对比度 亮度 调节</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QCheckBox" name="auto_adj">
+     <property name="text">
+      <string>自动调节</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QCVDisplay" name="widget" native="true">
+        <widget class="QCVDisplay" name="Camera_View" native="true">
          <property name="styleSheet">
           <string notr="true">border: 1px solid black;</string>
          </property>

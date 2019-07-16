@@ -75,6 +75,7 @@ public:
     double calculate_std_dev_H(Mat a,Mat b);  //È¥Ã÷¶È¾àÀë
 
     double *get_eigenvalue();
+    Mat get_img();
 };
 
 #endif // EIGENVALUE_H

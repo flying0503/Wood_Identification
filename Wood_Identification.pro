@@ -29,7 +29,12 @@ SOURCES += \
         mainwindow.cpp \
     qcvdisplay.cpp \
     algorithm/eigenvalue.cpp \
-    adjust_dialog.cpp
+    adjust_dialog.cpp \
+    algorithm/eigenvalue.cpp \
+    algorithm/equalizehist.cpp \
+    algorithm/split_rgb.cpp \
+    algorithm/butterworth.cpp \
+    process/process.cpp
 
 HEADERS += \
         mainwindow.h \
