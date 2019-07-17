@@ -34,7 +34,7 @@ bool adjust_Dialog::openCamara(int idex)
     cam = new VideoCapture;//打开摄像头，从摄像头中获取视频
     bool flage = cam->open(idex);
     if(flage)
-    timer->start(500);              // 开始计时，超时则发出timeout()信号
+    timer->start(30);              // 开始计时，超时则发出timeout()信号
     return flage;
 }
 
