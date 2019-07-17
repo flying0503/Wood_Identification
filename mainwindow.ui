@@ -196,6 +196,9 @@
        <property name="styleSheet">
         <string notr="true">border: 1px solid black;</string>
        </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
        <column>
         <property name="text">
          <string>模板图片</string>

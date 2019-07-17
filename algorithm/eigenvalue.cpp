@@ -3,6 +3,8 @@
 eigenvalue::eigenvalue(Mat img)
 {
     Ident_Img = new Mat(img);
+
+
     //ͼƬ
     cvtColor(img,*Ident_Img,COLOR_BGR2Lab);
     Mat channels[3];
@@ -296,5 +298,7 @@ double *eigenvalue::get_eigenvalue()
 
 Mat eigenvalue::get_img()
 {
-    return *Ident_Img;
+    Mat RGB;
+    cvtColor(*Ident_Img,RGB,COLOR_Lab2BGR);
+    return RGB;
 }

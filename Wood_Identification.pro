@@ -6,10 +6,13 @@
 
 QT       += core gui
 
+RC_ICONS = log.ico
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Wood_Identification
 TEMPLATE = app
+
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
