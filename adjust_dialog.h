@@ -44,15 +44,13 @@ private slots:
     void on_auto_adj_toggled(bool checked);
 
 private:
-    Ui::adjust_Dialog *ui;
-
     bool flag;
-
-    adj_img AdjImg;
-
-    QTimer *timer;
-    Mat frame;
+    Ui::adjust_Dialog *ui;
     VideoCapture *cam;          // 视频获取结构， 用来作为视频获取函数的一个参数
+    QTimer *timer;
+    adj_img AdjImg;
+    Mat frame;
+
 
 };
 
