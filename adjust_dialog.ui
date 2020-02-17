@@ -43,6 +43,9 @@
          </item>
          <item>
           <widget class="QSlider" name="brightness">
+           <property name="minimum">
+            <number>0</number>
+           </property>
            <property name="maximum">
             <number>255</number>
            </property>
